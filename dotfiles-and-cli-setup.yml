@@ -142,7 +142,7 @@
     - name: Install vim and neovim
       apt:
         name:
-          - vim-gnome  # default `vim` package doesn't have clipboard support
+          - vim-gtk3  # default `vim` package doesn't have clipboard support
           - neovim
       become: yes
 

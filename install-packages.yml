@@ -9,16 +9,16 @@
         codename: "{{ dist_override | default(omit) }}"
         filename: "git"
 
-    - name: add asciinema PPA
-      apt_repository:
-        repo: ppa:zanchey/asciinema
-        codename: "{{ dist_override | default(omit) }}"
-        filename: "asciinema"
+    # - name: add asciinema PPA
+    #   apt_repository:
+    #     repo: ppa:zanchey/asciinema
+    #     codename: "{{ dist_override | default(omit) }}"
+    #     filename: "asciinema"
 
     - name: Install latest versions of apt packages
       apt:
         name:
-          - asciinema   # for recording teminal sessions
+          # - asciinema   # for recording teminal sessions
           - build-essential
           - flip
           - git
@@ -129,6 +129,16 @@
   tags: desktop
   tasks:
 
+    - name: install microsoft apt key
+      apt_key:
+        data: "{{ lookup('file', inventory_dir + '/apt-keys/microsoft-apt-signing-key.asc') }}"
+
+    - name: install apt repo for vscode
+      apt_repository:
+        repo: deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main
+        codename: "{{ dist_override | default(omit) }}"
+        filename: vscode
+
     - name: add apt key for spotify
       apt_key:
         data: "{{ lookup('file', 'apt-keys/spotify_apt_key.asc') }}"
@@ -147,20 +157,25 @@
         repo: 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main'
         filename: google-chrome
 
-    # https://github.com/odeke-em/drive/
-    # alternative project that may be worth checking out:
-    # https://github.com/gdrive-org/gdrive
-    - name: add Google Drive cli PPA
-      apt_repository:
-        repo: ppa:twodopeshaggy/drive
-        codename: "{{ dist_override | default(omit) }}"
-        filename: google-drive
+    # # https://github.com/odeke-em/drive/
+    # # alternative project that may be worth checking out:
+    # # https://github.com/gdrive-org/gdrive
+    # - name: add Google Drive cli PPA
+    #   apt_repository:
+    #     repo: ppa:twodopeshaggy/drive
+    #     codename: "{{ dist_override | default(omit) }}"
+    #     filename: google-drive
 
-    - name: add redshift PPA
-      apt_repository:
-        repo: ppa:dobey/redshift-daily
-        codename: "{{ dist_override | default(omit) }}"
-        filename: redshift
+    # - name: add redshift PPA
+    #   apt_repository:
+    #     repo: ppa:dobey/redshift-daily
+    #     codename: "{{ dist_override | default(omit) }}"
+    #     filename: redshift
+
+    - name: install IDEs for testing limestone
+      apt:
+        name:
+          - code
 
     - name: Install latest versions of apt packages
       apt:
@@ -168,29 +183,30 @@
           - baobab
           - dconf-cli
           - dconf-editor   # desktop environment configuration
-          - drive   # CLI for google drive
+          # - drive   # CLI for google drive
           - firefox   # make sure firefox is updated - my package manager
                       # didn't want to update it on its own
           - gitk
           - google-chrome-stable
           - gparted
           - indicator-multiload
-          - kate
+          # - kate
           - keepass2
+          - keepassxc
           - xdotool   # library for auto-type in keepass
           - libdvdread4   # DVD decryption
             # at least one of these 3 packages is needed for okular to open pdfs
           - libnotify-bin  # for system notifications
-          - kdelibs5-plugins
-          - kdelibs5-data
-          - oxygen-icon-theme
+          # - kdelibs5-plugins
+          # - kdelibs5-data
+          # - oxygen-icon-theme
           - okular
-          - redshift   # for adjusting screen color temperature
+          # - redshift   # for adjusting screen color temperature
           - usb-creator-gtk  # for creating USB drives for OS installation
-          - vim-gnome
+          # - vim-gnome
           - vlc
           - spotify-client
-          - stopwatch   # time tracking
+          # - stopwatch   # time tracking
           - xbacklight   # changing screen brightness
           - xsel   # copying and pasting from middle-mouse-button clipboard
           - xclip   # accessing clipboard from cli, needed by pass

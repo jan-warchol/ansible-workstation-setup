@@ -33,6 +33,7 @@
         mode: 0400
       loop:
         - jw_personal_1
+        - jan@jw-t430s_1
       no_log: yes
 
     - name: copy public keys from passwordstore
@@ -42,6 +43,9 @@
         mode: 0400
       loop:
         - jw_personal_1
+        - jan@jw-t430s_1
+
+    - debug: var=ssh_key_name
 
       # Allow to either use a key that already exists on the machine,
       # or create a new one with a unique name (to avoid confusion).
@@ -76,8 +80,6 @@
       user:
         name: "{{ ansible_user_id }}"
         generate_ssh_key: yes
-        ssh_key_type: "{{ key_type }}"
-        ssh_key_bits: "{{ key_size }}"
         ssh_key_file: .ssh/keys/{{ ssh_key_name }}
         ssh_key_comment: "{{ ssh_key_name }}"
         ssh_key_passphrase: "{{ key_passphrase }}"
