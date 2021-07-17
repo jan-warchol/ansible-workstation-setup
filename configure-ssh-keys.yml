@@ -80,6 +80,8 @@
       user:
         name: "{{ ansible_user_id }}"
         generate_ssh_key: yes
+        ssh_key_type: "{{ key_type }}"
+        ssh_key_bits: "{{ key_size }}"
         ssh_key_file: .ssh/keys/{{ ssh_key_name }}
         ssh_key_comment: "{{ ssh_key_name }}"
         ssh_key_passphrase: "{{ key_passphrase }}"
